@@ -1,0 +1,15 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/fitlink
+  security:
+    filter:
+      dispatcher-types: REQUEST
+
+app:
+  jwt:
+    secret: "replace-with-256-bit-secret-generated-once" # e.g. 32+ random bytes base64
+    access-token-ttl: 15m
+    refresh-token-ttl: 7d
+server:
+  port: 8080
