@@ -28,13 +28,10 @@ public class SecurityConfig {
     private UserServiceImpl userDetailsService;
 
     @Autowired
-    private JwtAuthenticationEntryPoint  unauthorizedHandler;
-
-    @Bean
-    public JwtAuthenticationFilter authenticationTokenFilter() {
-        return  new JwtAuthenticationFilter();
-
-    }
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    
+    @Autowired
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Bean
      public DaoAuthenticationProvider authenticationProvider () {
 
@@ -59,12 +56,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
     @Bean
-    public JwtAuthenticationFilter authenticationJwtTokenFilter() {
-        return new JwtAuthenticationFilter();
-    }
-
-
-    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
@@ -74,6 +65,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/test/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         // Allow Swagger UI access
                         .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui.html").permitAll()
@@ -83,7 +75,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
