@@ -40,6 +40,9 @@ public class AuthService
         if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("User already exists with email: " + request.email());
         }
+        if (userRepository.existsByUsername(request.username())) {
+            throw new RuntimeException("User already exists with username: " + request.username());
+        }
         // create a new user
         AppUser user = new AppUser();
         user.setName(request.name());
