@@ -1,8 +1,7 @@
 package org.fitlink.fitlinkbackend.Service;
 
 
-import com.nimbusds.openid.connect.sdk.AuthenticationResponse;
-import org.fitlink.fitlinkbackend.Dto.AuthReponse;
+import org.fitlink.fitlinkbackend.Dto.AuthResponse;
 import org.fitlink.fitlinkbackend.Dto.LoginRequest;
 import org.fitlink.fitlinkbackend.Dto.RegisterRequest;
 import org.fitlink.fitlinkbackend.Models.AppUser;
@@ -31,7 +30,7 @@ public class AuthService
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public AuthReponse register (RegisterRequest request) {
+    public AuthResponse register (RegisterRequest request) {
         // validate  passsword matches or not
         if (!request.password().equals(request.confirmPassword())) {
             throw new RuntimeException("Passwords do not match");
@@ -45,16 +44,18 @@ public class AuthService
         AppUser user = new AppUser();
         user.setName(request.name());
         user.setEmail(request.email());
+        user.setUserRole(request.appUserRole());
         user.setHashedPassword(passwordEncoder.encode(request.password()));
+        user.setUsername( request.username());
 
         userRepository.save(user);
         //  generate jwt token
         String jwt = jwtUtils.generateToken(user);
 
-        return new AuthReponse(jwt, user.getEmail(), user.getName(), user.getUserRole().toString());
+        return new AuthResponse(jwt, user.getEmail(), user.getName(), user.getUserRole().toString());
 
     }
-    public AuthReponse   login(LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         Authentication authentication =  authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.username(),
@@ -64,7 +65,7 @@ public class AuthService
         SecurityContextHolder.getContext().setAuthentication(authentication);
         AppUser userDetails = ( AppUser)  authentication.getPrincipal();
         String jwt = jwtUtils.generateToken(userDetails);
-        return new AuthReponse(jwt, userDetails.getEmail(), userDetails.getName(), userDetails.getUserRole().toString());
+        return new AuthResponse(jwt, userDetails.getEmail(), userDetails.getName(), userDetails.getUserRole().toString());
     }
 
 

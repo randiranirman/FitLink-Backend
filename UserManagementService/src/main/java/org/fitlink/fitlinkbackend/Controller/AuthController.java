@@ -2,14 +2,13 @@ package org.fitlink.fitlinkbackend.Controller;
 
 
 import jakarta.validation.Valid;
-import org.fitlink.fitlinkbackend.Dto.AuthReponse;
+import org.fitlink.fitlinkbackend.Dto.AuthResponse;
 import org.fitlink.fitlinkbackend.Dto.LoginRequest;
 import org.fitlink.fitlinkbackend.Dto.RegisterRequest;
 import org.fitlink.fitlinkbackend.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -25,8 +24,9 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest request) {
         try {
-            AuthReponse authReponse = authService.register(request);
-            return ResponseEntity.ok(authReponse);
+            AuthResponse authResponse = authService.register(request);
+
+            return ResponseEntity.ok(authResponse);
 
         }catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -34,11 +34,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    @ResponseStatus(HttpStatus.OK)
+
     public ResponseEntity<?>  loginUser(@Valid @RequestBody LoginRequest request) {
         try  {
-            AuthReponse authReponse  = authService.login(request);
-            return  ResponseEntity.ok(authReponse);
+            AuthResponse authResponse = authService.login(request);
+            return  ResponseEntity.ok(authResponse);
         }catch ( RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
