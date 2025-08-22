@@ -45,6 +45,11 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/test")
+    public String  testController() {
+        return "this is the test controller for auth service";
+    }
+
 
 
 
