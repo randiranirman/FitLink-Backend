@@ -1,9 +1,7 @@
 package org.fitlink.fitlinkbackend.Models;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -17,14 +15,31 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Document(collection = "app_users")
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 
 
 
 public class AppUser implements UserDetails {
+
+    public AppUser() {
+        this.userRole = AppUserRole.CLIENT; // Set default role
+        this.createdAt = Instant.now();
+        this.enabled = true;
+    }
+    
+    public AppUser(String id, String email, String hashedPassword, String name, 
+                   AppUserRole userRole, boolean enabled, boolean fromOauth, String username) {
+        this.Id = id;
+        this.email = email;
+        this.hashedPassword = hashedPassword;
+        this.name = name;
+        this.userRole = userRole != null ? userRole : AppUserRole.CLIENT;
+        this.enabled = enabled;
+        this.fromOauth = fromOauth;
+        this.username = username;
+        this.createdAt = Instant.now();
+    }
 
 
     @Id
@@ -44,6 +59,9 @@ public class AppUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (userRole == null) {
+            return Collections.singletonList(new SimpleGrantedAuthority("ROLE_CLIENT"));
+        }
         return Collections.singletonList( new SimpleGrantedAuthority("ROLE_" + userRole.name()));
     }
 
