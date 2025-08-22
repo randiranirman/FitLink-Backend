@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 
 @RequestMapping( "/api/auth")
-@ResponseStatus (HttpStatus.OK)
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
 
@@ -22,15 +22,16 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest request) {
+    public AuthResponse registerUser(@Valid @RequestBody RegisterRequest request) {
+
         try {
-            AuthResponse authResponse = authService.register(request);
+            System.out.println("registering user " + request.username());
+            return authService.register(request);
 
-            return ResponseEntity.ok(authResponse);
-
-        }catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e.getMessage());
         }
+
     }
 
     @PostMapping("/login")

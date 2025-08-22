@@ -21,7 +21,7 @@ public class UserController {
 
 
     @GetMapping("/all")
-    @ResponseStatus( HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     public List<AppUser> getAllUsers() {
 
         var userlist =  adminService.getAllUsers();
