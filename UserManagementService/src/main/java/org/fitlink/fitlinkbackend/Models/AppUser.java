@@ -33,7 +33,7 @@ public class AppUser implements UserDetails {
     private String email ;
     private String hashedPassword ;
     private String name   ;
-    private AppUserRole userRole= AppUserRole.CLIENT;
+    private AppUserRole userRole;
     private boolean enabled= true;
     private boolean fromOauth = false ;
     private String  username ;
