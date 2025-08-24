@@ -27,8 +27,8 @@ public class JwtUtils {
     private int jwtExpirationMs;
     
     private SecretKey getSigningKey() {
-        // Ensure the key is at least 256 bits (32 bytes)
-        byte[] keyBytes = "8f1c9d4e72a5b3f01d6a2e4b79c85a1d3f9e47c6a0d25b89c4e137ab59d6f2c8\n".getBytes();
+        // Use the configured JWT secret from environment variables
+        byte[] keyBytes = jwtSecret.getBytes();
         if (keyBytes.length < 32) {
             logger.warn("JWT secret key is too short. Using a secure generated key.");
             return Keys.secretKeyFor(SignatureAlgorithm.HS256);

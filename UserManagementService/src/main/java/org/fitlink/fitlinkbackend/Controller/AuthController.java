@@ -49,6 +49,11 @@ public class AuthController {
     public String  testController() {
         return "this is the test controller for auth service";
     }
+    
+    @GetMapping("/health")
+    public ResponseEntity<?> healthCheck() {
+        return ResponseEntity.ok("Auth service is running and accessible!");
+    }
 
 
 

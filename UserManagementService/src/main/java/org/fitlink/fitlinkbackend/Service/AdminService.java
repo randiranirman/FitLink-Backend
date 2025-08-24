@@ -48,6 +48,33 @@ public class AdminService {
 
     }
 
+    public void deleteUserById( String id) {
+
+        Predicate<AppUser> userPredicate= user -> user.getId().equals(id );
+
+        var findUser = userRepository.findAll().stream().filter(userPredicate).findFirst().orElseThrow(() -> new  UserNotFoundException("User not found with id: " + id));
+
+        userRepository.delete(findUser);
+
+    }
+
+
+
+    public  List<AppUser> getAllTrainers( ) {
+
+        var trainers = userRepository.findAll().stream().filter(user -> user.getUserRole().toString().equals("TRAINER")).toList();
+
+        return trainers;
+
+    }
+
+    public  List<AppUser> getAllClients( ) {
+
+        var trainers = userRepository.findAll().stream().filter(user -> user.getUserRole().toString().equals("CLIENT")).toList();
+
+        return trainers;
+
+    }
 
 
 
