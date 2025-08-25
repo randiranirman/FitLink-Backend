@@ -11,8 +11,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Document(collection = "app_users")
 @Getter
@@ -26,7 +28,9 @@ public class AppUser implements UserDetails {
         this.userRole = AppUserRole.CLIENT; // Set default role
         this.createdAt = Instant.now();
         this.enabled = true;
+        this.clientDetails = new ArrayList<>();
     }
+
     
     public AppUser(String id, String email, String hashedPassword, String name, 
                    AppUserRole userRole, boolean enabled, boolean fromOauth, String username) {
@@ -39,6 +43,7 @@ public class AppUser implements UserDetails {
         this.fromOauth = fromOauth;
         this.username = username;
         this.createdAt = Instant.now();
+        this.clientDetails = new ArrayList<>();
     }
 
 
@@ -52,6 +57,8 @@ public class AppUser implements UserDetails {
     private boolean enabled= true;
     private boolean fromOauth = false ;
     private String  username ;
+
+    private List<ClientDetails> clientDetails ;
 
 
     private Instant createdAt = Instant.now();
