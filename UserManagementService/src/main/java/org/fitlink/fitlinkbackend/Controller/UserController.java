@@ -38,6 +38,32 @@ public class UserController {
         return adminService.findUserById(id);
     }
 
+    @DeleteMapping("/user/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteUserById( @PathVariable String id) {
+
+        adminService.deleteUserById(id);
+
+    }
+
+    @GetMapping("/user/clients")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getAllClients() {
+
+        var clients  = adminService.getAllClients().stream().map( user -> new UserDto(user.getEmail(), user.getName(), user.getId(), user.getUserRole())).toList();
+        return clients;
+
+    }
+
+    @GetMapping("/user/trainers")
+    @ResponseStatus(HttpStatus.OK)
+    public List<UserDto> getAllTrainers() {
+
+        var clients  = adminService.getAllTrainers().stream().map( user -> new UserDto(user.getEmail(), user.getName(), user.getId(), user.getUserRole())).toList();
+        return clients;
+
+    }
+
 
 
 
