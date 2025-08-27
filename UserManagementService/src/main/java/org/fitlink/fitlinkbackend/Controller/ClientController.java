@@ -3,9 +3,13 @@ package org.fitlink.fitlinkbackend.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.fitlink.fitlinkbackend.Dto.ClientRegisterForTrainerRequest;
+import org.fitlink.fitlinkbackend.Dto.UserDto;
 import org.fitlink.fitlinkbackend.Service.ClientService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -27,6 +31,16 @@ public class ClientController {
 
 
 
+
+
+    }
+
+    @GetMapping("/searchTrainers")
+
+    public List<UserDto> searchTrainer( @RequestParam String name) {
+
+
+        return clientService.searchTrainerByName(name);
 
     }
 

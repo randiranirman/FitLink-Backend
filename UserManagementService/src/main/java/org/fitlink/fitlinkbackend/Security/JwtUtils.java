@@ -21,7 +21,7 @@ public class JwtUtils {
     private static  final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
 
-    @Value("${fitlink.jwt.secret:fitlink-jwt-secret-key-that-is-at-least-256-bits-long-for-security-compliance}")
+    @Value("${fitlink.jwt.secret:fitlink-jwt-secret-key-f3d7c1a9e24b6f93d6a48155a7c2f91e04d8c6b3f1a0b7e9c35d4f82a6e7b12c}")
     private String jwtSecret;
     @Value("${fitlink.jwt.expiration:86400}")
     private int jwtExpirationMs;
