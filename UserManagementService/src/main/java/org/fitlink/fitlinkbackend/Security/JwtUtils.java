@@ -3,6 +3,7 @@ package org.fitlink.fitlinkbackend.Security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.fitlink.fitlinkbackend.Models.AppUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,9 +37,11 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken( UserDetails userDetails) {
+    public String generateToken(AppUser user) {
         Map<String, Object>  claims = new HashMap<>();
-        return generateToken(claims, userDetails.getUsername());
+        claims.put("id" , user.getId());
+        claims.put("role"  ,user.getUserRole());
+        return generateToken(claims, user.getUsername());
     }
 
     public String extractUsername ( String token ) {
@@ -66,6 +69,8 @@ public class JwtUtils {
 
 
     public String generateToken(Map<String, Object> extraClaims, String username) {
+
+
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(username)
