@@ -20,10 +20,10 @@ import java.util.List;
 public class MealPlan {
 
     @Id
-     private Long  mealId;
-    private Long clientId ;
+     private String   mealId;
+    private String  clientId ;
 
-    private Long  trainerId ;
+    private String  trainerId ;
 
     private LocalDate startDate ;
     private LocalDate endDate ;
