@@ -1,4 +1,34 @@
 package org.fitlink.trackingservice.Models;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Document(collection = "meal_plan")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class MealPlan {
+
+    @Id
+     private Long  mealId;
+    private Long clientId ;
+
+    private Long  trainerId ;
+
+    private LocalDate startDate ;
+    private LocalDate endDate ;
+    private List<Meal> meals;
+
+
+
 }

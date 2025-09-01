@@ -5,6 +5,7 @@ import com.nimbusds.oauth2.sdk.client.ClientDeleteRequest;
 import lombok.RequiredArgsConstructor;
 import org.fitlink.fitlinkbackend.Dto.ClientRegisterForTrainerRequest;
 import org.fitlink.fitlinkbackend.Dto.UserDto;
+import org.fitlink.fitlinkbackend.Exceptions.AlreadyRegistedException;
 import org.fitlink.fitlinkbackend.Exceptions.TrainerNotFoundException;
 import org.fitlink.fitlinkbackend.Exceptions.UserNotFoundException;
 import org.fitlink.fitlinkbackend.Models.AppUserRole;
@@ -13,6 +14,7 @@ import org.fitlink.fitlinkbackend.Repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +34,17 @@ public class ClientService {
             // Initialize clientDetails if it's null (defensive programming)
             if (trainer.getClientDetails() == null) {
                 trainer.setClientDetails(new java.util.ArrayList<>());
+
             }
+
+            // check if the   client already registered
+            boolean alreadyRegistered = trainer.getClientDetails().stream()
+                    .anyMatch(clientDetails -> clientDetails.getClientId().equals(request.clientId()));
+            if(alreadyRegistered){
+                throw  new AlreadyRegistedException("user  already   registered  ");
+
+            }
+
             trainer.getClientDetails().add(new ClientDetails(request.clientId(), request.name(), request.email(), request.contactNumber(), request.address(), request.gender(), request.age(), request.weight()));
             repository.save(trainer);
 
