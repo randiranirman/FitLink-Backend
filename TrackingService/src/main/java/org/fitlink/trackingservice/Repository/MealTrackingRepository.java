@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface  MealTrackingRepository  extends MongoRepository<MealPlan, Long> {
+public interface  MealTrackingRepository  extends MongoRepository<MealPlan, String> {
 
 }
