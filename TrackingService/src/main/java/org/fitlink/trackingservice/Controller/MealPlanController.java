@@ -20,11 +20,12 @@ public class MealPlanController {
 
 
 
-    @PostMapping("/create-plan")
+    @PostMapping("/create-meal")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<FoodItem> createFoodItem (@RequestBody FoodItemDto request) {
 
         var item = mealTrackingService.createFoodItem(request.name(), request.quantity(), request.unit());
+
 
 
         return ResponseEntity.ok(item);

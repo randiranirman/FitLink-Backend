@@ -16,6 +16,10 @@ public class Meal {
 
     private String time ; //   breakfast lunch dinner
     private int totalCalories ;
+    private int totalProteinsContains ;
+    private int totalFatContains ;
+    private int totalCarbsContains ;
+
     private List<FoodItem> foodItems;
 
 
