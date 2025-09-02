@@ -2,7 +2,7 @@ package org.fitlink.trackingservice.Controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.fitlink.trackingservice.Dto.ClientDto;
+import org.fitlink.trackingservice.Dto.UserDto;
 import org.fitlink.trackingservice.Service.TestService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class TestController {
 
 
 
-    public ClientDto getClientByID(@PathVariable  String id){
+    public UserDto getClientByID(@PathVariable  String id){
 
 
         var client = testService.getClientByID(id);
