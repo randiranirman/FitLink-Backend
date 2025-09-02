@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mealPlans")
@@ -30,6 +32,18 @@ public class MealPlanController {
 
         return ResponseEntity.ok(item);
 
+
+    }
+
+
+    @GetMapping("/getAllFoodItems")
+    @ResponseStatus(HttpStatus.OK)
+
+
+    public List<FoodItem> getAllFoodItems ( ) {
+
+
+        return mealTrackingService.getFoodItems();
 
     }
 
