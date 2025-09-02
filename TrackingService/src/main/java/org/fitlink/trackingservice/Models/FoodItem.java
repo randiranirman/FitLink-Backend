@@ -16,4 +16,10 @@ public class FoodItem {
     private double  quantity ;
     private String unit; // e.g., grams
     private int calories; // calories for that quantity
+    private int fats ;
+
+    private int carbs ;
+    private int proteins ;
+
+
 }

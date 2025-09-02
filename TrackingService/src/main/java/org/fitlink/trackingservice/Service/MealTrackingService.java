@@ -15,11 +15,13 @@ public class MealTrackingService {
 
 
     private final  NutritionService nutritionService;
+
     public FoodItem createFoodItem (String name ,  double quantity , String unit ) {
-        int calories =  nutritionService.getCalories(name,quantity,unit);
 
 
-         return new FoodItem(name , quantity, unit, calories);
+
+     return nutritionService.getNutrition(name ,quantity, unit);
+
     }
 
 
