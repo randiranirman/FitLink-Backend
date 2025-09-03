@@ -27,6 +27,8 @@ public class MealPlan {
 
     private LocalDate startDate ;
     private LocalDate endDate ;
+
+
     private List<Meal> meals;
 
 

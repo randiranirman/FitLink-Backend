@@ -3,8 +3,10 @@ package org.fitlink.trackingservice.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.fitlink.trackingservice.Dto.FoodItemDto;
+import org.fitlink.trackingservice.Dto.MealDto;
+import org.fitlink.trackingservice.Dto.MealResponseDto;
 import org.fitlink.trackingservice.Models.FoodItem;
-import org.fitlink.trackingservice.Repository.MealTrackingRepository;
+import org.fitlink.trackingservice.Service.MealService;
 import org.fitlink.trackingservice.Service.MealTrackingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +16,17 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mealPlans")
+@RequestMapping("/api/meals")
 public class MealPlanController {
 
     private final MealTrackingService mealTrackingService;
+    private final MealService mealService;
 
 
 
 
-    @PostMapping("/create-meal")
-    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/create-foodItem")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<FoodItem> createFoodItem (@RequestBody FoodItemDto request) {
 
         var item = mealTrackingService.createFoodItem(request.name(), request.quantity(), request.unit());
@@ -46,6 +49,14 @@ public class MealPlanController {
         return mealTrackingService.getFoodItems();
 
     }
+    @PostMapping("/createMeal/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public MealResponseDto createMealForCLients (@RequestBody MealDto request) {
+        return  mealService.createMeal(request);
+
+
+    }
+
 
 
 }
