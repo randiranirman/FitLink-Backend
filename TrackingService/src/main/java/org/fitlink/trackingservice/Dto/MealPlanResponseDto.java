@@ -5,5 +5,5 @@ import org.fitlink.trackingservice.Models.Meal;
 import java.time.LocalDate;
 import java.util.List;
 
-public record MealPlanRequest(String clientId , LocalDate startDate, LocalDate endDate , List<String> mealsIds) {
+public record MealPlanResponseDto(String clientId , LocalDate startDate, LocalDate endDate , List<Meal> meals) {
 }
