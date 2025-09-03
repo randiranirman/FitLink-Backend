@@ -2,9 +2,7 @@ package org.fitlink.trackingservice.Controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.fitlink.trackingservice.Dto.FoodItemDto;
-import org.fitlink.trackingservice.Dto.MealDto;
-import org.fitlink.trackingservice.Dto.MealResponseDto;
+import org.fitlink.trackingservice.Dto.*;
 import org.fitlink.trackingservice.Models.FoodItem;
 import org.fitlink.trackingservice.Service.MealService;
 import org.fitlink.trackingservice.Service.MealTrackingService;
@@ -21,6 +19,7 @@ public class MealPlanController {
 
     private final MealTrackingService mealTrackingService;
     private final MealService mealService;
+
 
 
 
@@ -49,13 +48,31 @@ public class MealPlanController {
         return mealTrackingService.getFoodItems();
 
     }
-    @PostMapping("/createMeal/")
+    @PostMapping("/createMeal")
     @ResponseStatus(HttpStatus.CREATED)
     public MealResponseDto createMealForCLients (@RequestBody MealDto request) {
         return  mealService.createMeal(request);
 
 
     }
+
+    @PostMapping("/createMealPlan/{trainerID}")
+    @ResponseStatus( HttpStatus.CREATED)
+    public MealPlanResponseDto createMealPlanForClient (@PathVariable String  trainerID,@RequestBody MealPlanRequest request){
+
+
+
+         return  mealService.createMealPlan(trainerID, request);
+
+
+    }
+
+    @GetMapping("/getAllMeals")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MealResponseDto> getAllMeals() {
+        return mealService.getAllMeals();
+    }
+
 
 
 
