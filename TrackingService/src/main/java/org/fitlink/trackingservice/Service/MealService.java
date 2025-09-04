@@ -2,6 +2,7 @@ package org.fitlink.trackingservice.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.fitlink.trackingservice.Dto.*;
+import org.fitlink.trackingservice.Exception.TrainerNotFoundException;
 import org.fitlink.trackingservice.Models.FoodItem;
 import org.fitlink.trackingservice.Models.Meal;
 import org.fitlink.trackingservice.Models.MealPlan;
@@ -19,6 +20,8 @@ public class MealService {
     private final MealRepository mealRepository;
     private final FoodItemRepository foodItemRepository;
     private final MealPlanRepository mealPlanRepository;
+    private final UserService  userService;
+
 
     public MealResponseDto createMeal(MealDto request) {
         var totalCalories = 0;
@@ -59,6 +62,15 @@ public class MealService {
 
     public MealPlanResponseDto createMealPlan(String trainerId, MealPlanRequest request) {
         var meals = mealRepository.findAllById(request.mealsIds());
+        var result = userService.getClientByID(request.clientId());
+        var trainerRessult =  userService.getClientByID(trainerId);
+
+
+        if(result == null || trainerRessult == null){
+            throw  new TrainerNotFoundException("client is not found  with client id  " + request.clientId())
+;
+
+        }
 
         var mealPlan = new MealPlan(
                 request.clientId(),
@@ -92,4 +104,29 @@ public class MealService {
                 ))
                 .collect(Collectors.toList());
     }
+
+
+   public List<MealPlanResponseDto> getAllMealPlans() {
+
+
+
+        return mealPlanRepository.findAll().stream().map( meal ->  new MealPlanResponseDto(meal.getClientId(), meal.getStartDate(),meal.getEndDate(),meal.getMeals())).collect(Collectors.toList());
+   }
+
+   public List<MealPlanResponseDto> getMealPlansWithClientId( String clientId) {
+
+
+
+       return mealPlanRepository.getMealPlanByClientId(clientId).stream().map( mealPlan ->  new MealPlanResponseDto(mealPlan.getClientId(),mealPlan.getStartDate(), mealPlan.getEndDate(), mealPlan.getMeals())).collect(Collectors.toList());
+
+   }
+
+
+
+
+
+
+
+
+
 }

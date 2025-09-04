@@ -73,6 +73,23 @@ public class MealPlanController {
         return mealService.getAllMeals();
     }
 
+    @GetMapping("/getAllMealPlans")
+    @ResponseStatus( HttpStatus.OK)
+
+    public List<MealPlanResponseDto> getAllMealPlans( ) {
+        return mealService.getAllMealPlans();
+
+    }
+
+     @GetMapping("/getMealPlansById/{clientId}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MealPlanResponseDto> getAllMealPlansByClientId( @PathVariable  String clientId) {
+
+         return mealService.getMealPlansWithClientId(clientId);
+
+     }
+
+
 
 
 

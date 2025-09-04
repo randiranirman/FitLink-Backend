@@ -4,7 +4,7 @@ package org.fitlink.trackingservice.Controller;
 import lombok.RequiredArgsConstructor;
 import org.fitlink.trackingservice.Dto.MealPlanRequest;
 import org.fitlink.trackingservice.Dto.UserDto;
-import org.fitlink.trackingservice.Service.TestService;
+import org.fitlink.trackingservice.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 
 public class TestController {
-    private final TestService testService;
+    private final UserService userService;
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
 
@@ -23,7 +23,7 @@ public class TestController {
     public UserDto getClientByID(@PathVariable  String id){
 
 
-        var client = testService.getClientByID(id);
+        var client = userService.getClientByID(id);
 
 
         return client;
