@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 
-public class TestService {
+public class UserService {
 
      private final UserClient userClient ;
 
