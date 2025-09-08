@@ -102,4 +102,40 @@ public class TestController {
             return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
         }
     }
+
+    @GetMapping("/oauth2/status")
+    public ResponseEntity<?> getOAuth2Status() {
+        Map<String, Object> status = new HashMap<>();
+        status.put("oauth2Configured", true);
+        status.put("googleLoginUrl", "/oauth2/authorization/google");
+        status.put("testEndpoints", Map.of(
+            "oauth2Test", "/api/oauth2/test/health",
+            "authStatus", "/api/oauth2/test/auth-status",
+            "userInfo", "/api/oauth2/test/user-info"
+        ));
+        status.put("message", "OAuth2 is configured and ready for testing");
+        
+        return ResponseEntity.ok(status);
+    }
+
+    @GetMapping("/oauth2-users/count")
+    public ResponseEntity<?> getOAuth2UsersCount() {
+        try {
+            long oauth2Count = userRepository.findAll()
+                .stream()
+                .filter(AppUser::isFromOauth)
+                .count();
+                
+            long totalCount = userRepository.count();
+            
+            Map<String, Object> response = new HashMap<>();
+            response.put("totalUsers", totalCount);
+            response.put("oauth2Users", oauth2Count);
+            response.put("regularUsers", totalCount - oauth2Count);
+            
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error: " + e.getMessage());
+        }
+    }
 }

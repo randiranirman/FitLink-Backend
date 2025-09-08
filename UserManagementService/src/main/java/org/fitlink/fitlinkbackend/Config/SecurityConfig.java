@@ -1,11 +1,11 @@
 package org.fitlink.fitlinkbackend.Config;
 
-import org.fitlink.fitlinkbackend.Handlers.OAuth2AuthenticationSuccessHandler;
+
+import org.fitlink.fitlinkbackend.Handlers.Oauth2AuthenticationSuccessHandler;
 import org.fitlink.fitlinkbackend.Security.JwtAuthenticationEntryPoint;
 import org.fitlink.fitlinkbackend.Security.JwtAuthenticationFilter;
 import org.fitlink.fitlinkbackend.Service.UserServiceImpl;
-import org.fitlink.fitlinkbackend.Service.CustomOAuth2UserService;
-
+import org.fitlink.fitlinkbackend.Service.CustomOauth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,10 +41,10 @@ public class SecurityConfig {
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
-    private CustomOAuth2UserService customOAuth2UserService;
+    private Oauth2AuthenticationSuccessHandler oauth2AuthenticationSuccessHandler;
 
     @Autowired
-    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private CustomOauth2UserService customOauth2UserService;
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -99,18 +99,21 @@ public class SecurityConfig {
                                 "/swagger-resources/**", "/webjars/**").permitAll()
                         // Actuator
                         .requestMatchers("/actuator/**").permitAll()
-                        .anyRequest().permitAll()
-                )
-                // ✅ OAuth2 Login - no /login page, use /oauth2/authorization/google
-                .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/oauth2/authorization/google")
-                        .userInfoEndpoint(userInfo -> userInfo
-                                .userService(customOAuth2UserService)
-                        )
-                        .successHandler(oAuth2AuthenticationSuccessHandler)
+                        .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
+
+                // JWT Filter
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+
+                // OAuth2 Login
+                .oauth2Login(oauth2 -> oauth2
+                        .userInfoEndpoint(userInfo -> userInfo
+                                .userService(customOauth2UserService))
+                        .successHandler(oauth2AuthenticationSuccessHandler)
+                        .failureUrl("/login?error=oauth2_error")
+                )
+
                 .build();
     }
 }
