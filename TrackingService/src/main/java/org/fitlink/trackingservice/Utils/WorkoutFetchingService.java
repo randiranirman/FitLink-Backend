@@ -25,6 +25,10 @@ public class WorkoutFetchingService {
     public List<Exersice> fetchExercisesByMuscle(String muscle) {
         return fetchExercises("muscle=" + muscle);
     }
+    public List<Exersice> fetchExercisesByName( String name ) {
+        return fetchExercises("name" + name);
+
+    }
 
     public List<Exersice> fetchExercisesByType(String type) {
         return fetchExercises("type=" + type);

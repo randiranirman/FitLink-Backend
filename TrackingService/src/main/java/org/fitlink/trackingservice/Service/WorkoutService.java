@@ -17,10 +17,10 @@ import java.util.List;
 
 public class WorkoutService {
 
-    @Autowired
+
     private  final WorkoutRepository workoutRepository;
 
-    @Autowired
+
 
     private final WorkoutFetchingService workoutFetchingService;
 
@@ -38,23 +38,13 @@ public class WorkoutService {
 
 
          // convert exercise request to  actual exercises
-        if (request.exercises() != null) {
-            List<Exersice> exercises = request.exercises().stream()
-                    .map(exerciseReq -> {
-                        Exersice exercise = new Exersice();
-                        exercise.setName(exerciseReq.name());
-                        exercise.setType(exerciseReq.type());
-                        exercise.setMuscle(exerciseReq.muscle());
-                        exercise.setEquipment(exerciseReq.equipment());
-                        exercise.setDifficulty(exerciseReq.difficulty());
-                        exercise.setSets(exerciseReq.sets());
-                        exercise.setReps(exerciseReq.reps());
-                        exercise.setRestSeconds(exerciseReq.restSeconds());
-                        return exercise;
-                    })
-                    .toList();
+        if (request.exerciseName() != null) {
+            List<Exersice> exercises = workoutFetchingService.fetchExercisesByName(request.exerciseName());
+
             newWorkOut.setExersices(exercises);
         }
+
+        workoutRepository.save(newWorkOut);
 
 
         return  newWorkOut;
@@ -63,6 +53,7 @@ public class WorkoutService {
 
 
     }
+
 
 
 
