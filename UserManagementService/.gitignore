@@ -39,3 +39,7 @@ build/
 .env.test
 .env.production
 *.env
+
+### Local Configuration Files with Secrets ###
+application-local.properties
+src/main/resources/application-local.properties

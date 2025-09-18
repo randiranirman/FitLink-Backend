@@ -5,25 +5,22 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document( collection = "workout")
+@Document(collection = "workout")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@Data
 
-public class WorkoutPlan {
+
+public class Workout {
+
 
     @Id
     private String id ;
-
-    private String clientId;
-    private String trainerId ;
-
+    private String name ;
+    private String workoutType; // HIT, CARDIO ..
 
 
-
-
+    private Boolean isCompleted ;
 
 
 }
