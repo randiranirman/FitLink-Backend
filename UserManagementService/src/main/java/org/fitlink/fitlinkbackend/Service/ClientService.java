@@ -39,7 +39,7 @@ public class ClientService {
 
             // check if the   client already registered
             boolean alreadyRegistered = trainer.getClientDetails().stream()
-                    .anyMatch(clientDetails -> clientDetails.getClientId().equals(request.clientId()));
+                    .anyMatch(clientDetails -> request.clientId().equals(clientDetails.getClientId()));
             if(alreadyRegistered){
                 throw  new AlreadyRegistedException("user  already   registered  ");
 

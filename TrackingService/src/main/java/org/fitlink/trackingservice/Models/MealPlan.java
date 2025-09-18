@@ -32,6 +32,7 @@ public class MealPlan {
     private List<Meal> meals;
 
 
+
     public MealPlan(String clientId, String trainerId, LocalDate startDate, LocalDate endDate, List<Meal> meals) {
 
         this.clientId= clientId;

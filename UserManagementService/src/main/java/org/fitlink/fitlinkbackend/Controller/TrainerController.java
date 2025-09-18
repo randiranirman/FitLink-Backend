@@ -2,7 +2,7 @@ package org.fitlink.fitlinkbackend.Controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.fitlink.fitlinkbackend.Dto.ClientDetialsDto;
+import org.fitlink.fitlinkbackend.Dto.ClientDetailsDto;
 import org.fitlink.fitlinkbackend.Service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class TrainerController {
     @ResponseStatus(HttpStatus.OK)
 
 
-    public List<ClientDetialsDto> getClientDetailsByTrainerID (@PathVariable String trainerId) {
+    public List<ClientDetailsDto> getClientDetailsByTrainerID (@PathVariable String trainerId) {
 
 
         return trainerService.getRegisterdCientsByTrainerId(trainerId);
