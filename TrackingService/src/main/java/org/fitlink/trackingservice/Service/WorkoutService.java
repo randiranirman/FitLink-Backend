@@ -3,6 +3,7 @@ package org.fitlink.trackingservice.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.fitlink.trackingservice.Dto.CreateWorkoutRequest;
+import org.fitlink.trackingservice.Exception.ClientNotFound;
 import org.fitlink.trackingservice.Models.Exersice;
 import org.fitlink.trackingservice.Models.Workout;
 import org.fitlink.trackingservice.Repository.WorkoutRepository;
@@ -19,6 +20,8 @@ public class WorkoutService {
 
 
     private  final WorkoutRepository workoutRepository;
+    private final UserService userService;
+
 
 
 
@@ -50,6 +53,31 @@ public class WorkoutService {
         return  newWorkOut;
 
 
+
+
+    }
+
+    public List<Workout> getAllWorkOutsByTrainerId( String trainerID ) {
+
+        if( userService.getClientByID(trainerID) == null) {
+            throw  new ClientNotFound(" trainer not found  in that id " + trainerID);
+
+        }
+
+
+         var workouts = workoutRepository.findWorkoutByTrainerId(trainerID).stream().toList();
+
+
+         return workouts;
+
+
+
+
+    }
+    public  List<Workout> getAllWorkouts ( ) {
+
+
+          return workoutRepository.findAll().stream().toList();
 
 
     }

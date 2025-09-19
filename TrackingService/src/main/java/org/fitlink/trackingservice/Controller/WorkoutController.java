@@ -3,9 +3,12 @@ package org.fitlink.trackingservice.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.fitlink.trackingservice.Dto.CreateWorkoutRequest;
+import org.fitlink.trackingservice.Models.Workout;
 import org.fitlink.trackingservice.Service.WorkoutService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/workouts"
@@ -27,4 +30,31 @@ public class WorkoutController {
 
         workoutService.createWorkOut(request);
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping
+    public List<Workout> getAllWorkouts( ) {
+
+        return workoutService.getAllWorkouts();
+
+
+
+    }
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/workouts/{trainerId}")
+    public List<Workout> getWorkOutsByTrainerId( @PathVariable  String trainerId) {
+
+
+
+
+        return workoutService.getAllWorkOutsByTrainerId(trainerId);
+
+
+
+
+
+    }
+
 }
