@@ -4,6 +4,7 @@ package org.fitlink.trackingservice.Utils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.fitlink.trackingservice.Models.Exersice;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,7 +19,9 @@ import java.util.Map;
 public class WorkoutFetchingService {
 
 
-    private final String WORKOUT_API_KEY = "Gg+rXg8NcoAKu0Bxxm2Fog==ykGKxe3iSf9jDcfE";
+
+    @Value("${workout.api.key)")
+    private String WORKOUT_API_KEY;
     private final String BASE_URL = "https://api.api-ninjas.com/v1/exercises";
     private final RestTemplate restTemplate= new RestTemplate();
     private final ObjectMapper  objectMapper = new ObjectMapper();
