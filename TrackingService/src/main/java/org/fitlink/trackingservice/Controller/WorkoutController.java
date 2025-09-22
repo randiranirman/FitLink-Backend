@@ -2,6 +2,7 @@ package org.fitlink.trackingservice.Controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.fitlink.trackingservice.Dto.CreateWorkOutResponse;
 import org.fitlink.trackingservice.Dto.CreateWorkoutRequest;
 import org.fitlink.trackingservice.Models.Workout;
 import org.fitlink.trackingservice.Service.WorkoutService;
@@ -25,10 +26,10 @@ public class WorkoutController {
     @PostMapping("/create-worout")
 
 
-    public void createWorkOut(@RequestBody CreateWorkoutRequest request){
+    public CreateWorkOutResponse createWorkOut(@RequestBody CreateWorkoutRequest request){
 
 
-        workoutService.createWorkOut(request);
+        return workoutService.createWorkOut(request);
     }
 
     @ResponseStatus(HttpStatus.OK)
